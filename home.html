@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Psixologiya Videolari</title>
+  <style>
+    /* Global stil */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eaf4f4;  /* Yengil pastel rang */
+      color: #2c3e50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+      color: #34495e;
+    }
+
+    /* Video galereya grid: min-width biroz kamaytirildi */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .video-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .video-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+    /* Videoni ixchamlashtirish uchun balandlikni chekladik */
+    .video-item video {
+      width: 100%;
+      height: 180px; /* Qisqartirilgan balandlik */
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+    /* Card ma'lumotlari uchun qism: padding va shrift o'lchami kamaytirildi */
+    .card-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 6px 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 0.8rem;
+      backdrop-filter: blur(3px);
+    }
+    .card-info p {
+      margin: 2px 0;
+      line-height: 1.2;
+    }
+    .card-info p span {
+      font-weight: bold;
+    }
+    
+    /* Modal oynaning stili */
+    .modal {
+      display: none; /* Boshlangʻich holatda modal yashirin */
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+    .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+    }
+    .modal video {
+      width: 100%;
+      border-radius: 12px;
+    }
+    .close {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: #2980b9;
+      color: #fff;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .close:hover {
+      background: #1c5980;
+    }
+  </style>
+</head>
+<body>
+  <h1>Psixologiya Videolari</h1>
+  <div class="gallery">
+    <!-- 3 ta namunaviy video card. Qolganlarini shu tarzda ko'paytiring -->
+    <div class="video-item" data-video="vid1.mp4">
+      <video muted loop playsinline preload="metadata" poster="1.jpg">
+        <source src="vid1.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span> Psixologiya nazariyasi va tarixi. </p>
+        <p><span>1-mavzu:</span>Kasblar va professionalism - mutaxassislikka kirish fanining asosiy tushunchasi sifatida.</p>
+        <p><span>Ma'ruzachi:</span> Dr. Abdurahmon</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="vid2.mp4">
+      <video muted loop playsinline preload="metadata" poster="1.jpg">
+        <source src="vid2.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> Malakali psixolog nazariyotchi va amaliyotchi sifatida.</p>
+        <p><span>Ma'ruzachi:</span>Psixol.f.n, dots. Sh.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="id3.mp4">
+      <video muted loop playsinline preload="metadata" poster="3.jpg">
+        <source src="id3.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi</p>
+        <p><span>Mavzu:</span> Amaliyotchi psixologning faoliyat sohalari.</p>
+        <p><span>Ma'ruzachi:</span>Psixol.f.n.,dots. Sh.Alimbayeva</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="vid3.mp4">
+      <video muted loop playsinline preload="metadata" poster="4.jpg">
+        <source src="vid3.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Amaliyotchi psixolog faoliyatining umumiy masalalari</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots. Sh.T.Alimbayeva</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="vid4.mp4">
+      <video muted loop playsinline preload="metadata" poster="5.jpg">
+        <source src="vid4.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> Psixologning kasbiy o'zini o'zi anglashida axloqiy jihatlar. </p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="vid6.mp4">
+      <video muted loop playsinline preload="metadata" poster="6.jpg">
+        <source src="vid6.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> Psixologiya tarixi faniga kirish.</p>
+        <p><span>Ma'ruzachi:</span> psixol.f.n., dots. Sh.T.Alimbayeva</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="7.mp4">
+      <video muted loop playsinline preload="metadata" poster="7.jpg">
+        <source src="7.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Psixologiyaning dastlabki va o'rta asrlarda rivojlanishi.         </p>
+        <p><span>Ma'ruzachi:</span>Psixol.f.n., dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="8.mp4">
+      <video muted loop playsinline preload="metadata" poster="8.jpg">
+        <source src="8.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>   Sharq mutafakkirlarining psixologik qarashlar</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n.,dots.Sh.T.Alimbayeva</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="9.mp4">
+      <video muted loop playsinline preload="metadata" poster="9.jpg">
+        <source src="9.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> XVIII-XX asrlarda xorijda psixologiyaning rivojlanishi</p>
+        <p><span>Ma'ruzachi:</span>Psixol.f.n., dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="10.mp4">
+      <video muted loop playsinline preload="metadata" poster="10.jpg">
+        <source src="10.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  XX asrda psixologiyaning rivojlanishi.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n.,dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="11.mp4">
+      <video muted loop playsinline preload="metadata" poster="11.jpg">
+        <source src="11.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  XXasrning ikkinchi yarmida yangi yo'nalishlarning vujudga kelishi.</p>
+        <p><span>Ma'ruzachi:</span>Psixol.f.n.,dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="12.mp4">
+      <video muted loop playsinline preload="metadata" poster="12.jpg">
+        <source src="12.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> Umumiy psixologiya fanining predmeti, vazifalari va metodlari.</p>
+        <p><span>Ma'ruzachi:</span> psixol.f.n., dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="13.mp4">
+      <video muted loop playsinline preload="metadata" poster="1.jpg">
+        <source src="13.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Psixologiya zamonaviy fanlar tizimida.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f., dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="14.mp4">
+      <video muted loop playsinline preload="metadata" poster="14.jpg">
+        <source src="14.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> Psixika va uning evolyutsiyasi</p>
+        <p><span>Ma'ruzachi:</span>  psixol.f.n, dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="15.mp4">
+      <video muted loop playsinline preload="metadata" poster="15.jpg">
+        <source src="15.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Faoliyat.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots. Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="16.mp4">
+      <video muted loop playsinline preload="metadata" poster="16.jpg">
+        <source src="16.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Guruh va jamoalar.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="17.mp4">
+      <video muted loop playsinline preload="metadata" poster="17.jpg">
+        <source src="17.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Shaxs.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="18.mp4">
+      <video muted loop playsinline preload="metadata" poster="18.jpg">
+        <source src="18.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Diqqat.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="19.mp4">
+      <video muted loop playsinline preload="metadata" poster="19.jpg">
+        <source src="19.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Sezgi.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="20.mp4">
+      <video muted loop playsinline preload="metadata" poster="20.jpg">
+        <source src="20.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Idrok.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="21.mp4">
+      <video muted loop playsinline preload="metadata" poster="21.jpg">
+        <source src="21.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> Xotira.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="22.mp4">
+      <video muted loop playsinline preload="metadata" poster="22.jpg">
+        <source src="22.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> Xayol.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="23.mp4">
+      <video muted loop playsinline preload="metadata" poster="23.jpg">
+        <source src="23.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Tafakkur.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="24.mp4">
+      <video muted loop playsinline preload="metadata" poster="24.jpg">
+        <source src="24.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span> Nutq.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="25.mp4">
+      <video muted loop playsinline preload="metadata" poster="25.jpg">
+        <source src="25.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Iroda.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="26.mp4">
+      <video muted loop playsinline preload="metadata" poster="26.jpg">
+        <source src="26.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Hissiyot.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="27.mp4">
+      <video muted loop playsinline preload="metadata" poster="27.jpg">
+        <source src="27.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Motivatsiya.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="28.mp4">
+      <video muted loop playsinline preload="metadata" poster="28.jpg">
+        <source src="28.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Qobiliyat.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="29.mp4">
+      <video muted loop playsinline preload="metadata" poster="29.jpg">
+        <source src="29.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Temperament.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <div class="video-item" data-video="30.mp4">
+      <video muted loop playsinline preload="metadata" poster="30.jpg">
+        <source src="30.mp4" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+      <div class="card-info">
+        <p><span>Fan:</span>  Psixologiya nazariyasi va tarixi.</p>
+        <p><span>Mavzu:</span>  Xarakter.</p>
+        <p><span>Ma'ruzachi:</span> Psixol.f.n., dots.Sh.T.Alimbayeva.</p>
+      </div>
+    </div>
+    <!-- Shu tarzda qolgan videolar uchun ham kartalar qo'shing -->
+  </div>
+
+  <!-- Modal oynasi: videoni kattaroq holatda ko'rsatish uchun -->
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close" id="modalClose">&times;</span>
+      <video controls id="modalVideo">
+        <source src="" type="video/mp4">
+        Brauzeringiz video qo‘llab-quvvatlamaydi.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    // Modal oynani boshqarish uchun JavaScript
+    const videoItems = document.querySelectorAll('.video-item');
+    const modal = document.getElementById('videoModal');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalClose = document.getElementById('modalClose');
+
+    videoItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const videoSrc = item.getAttribute('data-video');
+        const source = modalVideo.querySelector('source');
+        source.src = videoSrc;
+        modalVideo.load();
+        modal.style.display = 'flex';
+
+        modalVideo.play().catch(err => {
+          console.error("Video ijro etilmadi:", err);
+        });
+      });
+    });
+
+    function closeModal() {
+      modal.style.display = 'none';
+      modalVideo.pause();
+      modalVideo.currentTime = 0;
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

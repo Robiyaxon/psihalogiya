@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #E3F2FD;
+            margin: 0;
+        }
+        .register-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+        input {
+            display: block;
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <input type="text" id="fullname" placeholder="To‘liq ismingizni kiriting">
+        <input type="email" id="email" placeholder="Emailingizni kiriting">
+        <input type="password" id="password" placeholder="Parol yarating">
+        <input type="password" id="confirmPassword" placeholder="Parolni tasdiqlang">
+        <button onclick="register()">Register</button>
+    </div>
+
+    <script>
+        function register() {
+            alert("Muvaffaqiyatli ro‘yxatdan o‘tdingiz!");
+            window.location.href = "home.html";
+        }
+    </script>
+</body>
+</html>
